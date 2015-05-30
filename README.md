@@ -10,7 +10,7 @@ A subClassOf (prop max 1 B)
 
 
 ##TODO
- - Expand JSON-LD
- - Set up a ES6 transpiler
+ - Expand JSON-LD ✓
+ - Set up a ES6 transpiler ✓
  - Create examples in protege and export as both JSON-LD and Manchester Syntax
 

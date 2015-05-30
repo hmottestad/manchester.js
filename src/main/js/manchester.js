@@ -66,11 +66,12 @@ class Manchester {
 
 
     print(data, uri) {
-        this.subClasses(data[uri])
+        return this.subClasses(data[uri])
     }
 
     subClasses(obj){
         console.log(obj)
+
 
         for(let i of obj["http://www.w3.org/2000/01/rdf-schema#subClassOf"]){
 
@@ -78,7 +79,7 @@ class Manchester {
 
             if(restriction){
                 var res = Restriction.factory(i);
-                console.log(res.toString())
+                return res.toString();
             }
 
 
@@ -146,7 +147,12 @@ jsonld.expand(input, function(err, expanded){
     var linked = temp.link(expanded);
 
     var test = new Manchester;
-    console.log(test.print(linked, "http://example.com/A"));
+    console.log();
 
+    document.getElementById("log").innerHTML =
+        document.getElementById("log").innerHTML +
+        "<li><pre>"+
+        test.print(linked, "http://example.com/A").replace("<", "&lt;").replace(">","&gt;")+
+        "</pre></li>";
 
 })

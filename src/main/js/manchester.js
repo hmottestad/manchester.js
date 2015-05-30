@@ -37,7 +37,6 @@ var input = {
 class JsonLdHelper {
 
     link(data) {
-        console.log(data);
 
         var ret = {};
         for (let v of data) {
@@ -63,20 +62,91 @@ class JsonLdHelper {
 
 }
 
-class Test {
-    test() {
-        jsonld.expand(input, function(err, expanded){
+class Manchester {
 
-            var temp = new JsonLdHelper;
-            var linked = temp.link(expanded);
 
-            console.log(linked)
-
-        })
+    print(data, uri) {
+        this.subClasses(data[uri])
     }
+
+    subClasses(obj){
+        console.log(obj)
+
+        for(let i of obj["http://www.w3.org/2000/01/rdf-schema#subClassOf"]){
+
+            var restriction = i["@type"].some(function(val){return val == "http://www.w3.org/2002/07/owl#Restriction"});
+
+            if(restriction){
+                var res = Restriction.factory(i);
+                console.log(res.toString())
+            }
+
+
+        }
+
+    }
+
+
+}
+
+class Restriction{
+
+
+    constructor(obj){
+        this.obj = obj;
+        console.log(obj)
+
+
+    }
+
+    static factory(obj){
+        var ret = new Restriction(obj);
+
+        if(obj["http://www.w3.org/2002/07/owl#maxCardinality"] != null){
+            return MaxCardinalityRestriction.factory(ret);
+        }
+
+        return ret;
+    }
+
+    toString(){
+        return this.obj;
+    }
+
+}
+
+class MaxCardinalityRestriction{
+
+    constructor(res){
+        this.obj = res.obj;
+        this.maxCardinality = this.obj["http://www.w3.org/2002/07/owl#maxCardinality"][0]["@value"];
+        this.onProperty = this.obj["http://www.w3.org/2002/07/owl#onProperty"][0]["@id"];
+
+    }
+
+    static factory(res){
+        return new MaxCardinalityRestriction(res);
+    }
+
+    toString(){
+        return "<"+this.onProperty+"> max "+this.maxCardinality;
+    }
+
+
 }
 
 
 
-var test = new Test;
-console.log(test.test());
+
+
+
+jsonld.expand(input, function(err, expanded){
+
+    var temp = new JsonLdHelper;
+    var linked = temp.link(expanded);
+
+    var test = new Manchester;
+    console.log(test.print(linked, "http://example.com/A"));
+
+
+})

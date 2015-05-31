@@ -1,38 +1,5 @@
 
-var input = {
-    "@graph" : [ {
-        "@id" : "_:b0",
-        "@type" : "owl:Restriction",
-        "maxCardinality" : "1",
-        "onProperty" : "http://example.com/prop"
-    }, {
-        "@id" : "http://example.com/A",
-        "@type" : "owl:Class",
-        "subClassOf" : "_:b0"
-    }, {
-        "@id" : "http://example.com/prop",
-        "@type" : "owl:ObjectProperty"
-    } ],
-    "@context" : {
-        "subClassOf" : {
-            "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
-            "@type" : "@id"
-        },
-        "maxCardinality" : {
-            "@id" : "http://www.w3.org/2002/07/owl#maxCardinality",
-            "@type" : "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
-        },
-        "onProperty" : {
-            "@id" : "http://www.w3.org/2002/07/owl#onProperty",
-            "@type" : "@id"
-        },
-        "owl" : "http://www.w3.org/2002/07/owl#",
-        "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
-        "xml" : "http://www.w3.org/XML/1998/namespace",
-        "xsd" : "http://www.w3.org/2001/XMLSchema#",
-        "rdfs" : "http://www.w3.org/2000/01/rdf-schema#"
-    }
-};
+
 
 class JsonLdHelper {
 
@@ -103,9 +70,18 @@ class Restriction{
     static factory(obj){
         var ret = new Restriction(obj);
 
+
         if(obj["http://www.w3.org/2002/07/owl#maxCardinality"] != null){
             return MaxCardinalityRestriction.factory(ret);
         }
+
+        if(obj["http://www.w3.org/2002/07/owl#maxQualifiedCardinality"] != null){
+            console.log("HERE")
+            return MaxQualifiedCardinalityRestriction.factory(ret);
+        }
+
+
+
 
         return ret;
     }
@@ -116,12 +92,23 @@ class Restriction{
 
 }
 
-class MaxCardinalityRestriction{
+
+class CardinalityRestriction {
 
     constructor(res){
         this.obj = res.obj;
-        this.maxCardinality = this.obj["http://www.w3.org/2002/07/owl#maxCardinality"][0]["@value"];
         this.onProperty = this.obj["http://www.w3.org/2002/07/owl#onProperty"][0]["@id"];
+
+    }
+
+
+}
+
+class MaxCardinalityRestriction extends CardinalityRestriction{
+
+    constructor(res){
+        super(res)
+        this.maxCardinality = this.obj["http://www.w3.org/2002/07/owl#maxCardinality"][0]["@value"];
 
     }
 
@@ -136,23 +123,57 @@ class MaxCardinalityRestriction{
 
 }
 
+class MaxQualifiedCardinalityRestriction  extends CardinalityRestriction{
+
+    constructor(res){
+        super(res);
+        this.maxCardinality = this.obj["http://www.w3.org/2002/07/owl#maxQualifiedCardinality"][0]["@value"];
+        this.onDataRange = this.obj["http://www.w3.org/2002/07/owl#onDataRange"][0]["@id"];
+
+
+    }
+
+    static factory(res){
+        return new MaxQualifiedCardinalityRestriction(res);
+    }
+
+    toString(){
+        return "<"+this.onProperty+"> max "+this.maxCardinality + " <"+this.onDataRange+">";
+    }
+
+
+}
+
+
+$.get( "examples/simple.jsonld", function( data ) {
+
+
+
+
+    jsonld.expand( "http://localhost:8080/examples/simple.jsonld", function(err, expanded){
+
+        var temp = new JsonLdHelper;
+
+        console.log(err)
+
+        var linked = temp.link(expanded);
+
+        var test = new Manchester;
+        console.log(linked);
+
+        document.getElementById("log").innerHTML =
+            document.getElementById("log").innerHTML +
+            "<li><pre>"+
+            test.print(linked, "http://example.com/ont/D").replace("<", "&lt;").replace(">","&gt;").replace("<", "&lt;").replace(">","&gt;")+
+            "</pre></li>";
+
+    })
+});
 
 
 
 
 
-jsonld.expand(input, function(err, expanded){
 
-    var temp = new JsonLdHelper;
-    var linked = temp.link(expanded);
 
-    var test = new Manchester;
-    console.log();
 
-    document.getElementById("log").innerHTML =
-        document.getElementById("log").innerHTML +
-        "<li><pre>"+
-        test.print(linked, "http://example.com/A").replace("<", "&lt;").replace(">","&gt;")+
-        "</pre></li>";
-
-})

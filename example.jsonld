@@ -1,0 +1,116 @@
+{
+  "@graph" : [ {
+    "@id" : "_:b0",
+    "@type" : "owl:Restriction",
+    "onProperty" : "http://example.com/ont/hasData",
+    "someValuesFrom" : "xsd:string"
+  }, {
+    "@id" : "_:b1",
+    "@type" : "owl:Restriction",
+    "onProperty" : "http://example.com/ont/hasObj",
+    "someValuesFrom" : "http://example.com/ont/A"
+  }, {
+    "@id" : "_:b2",
+    "@type" : "owl:Restriction",
+    "allValuesFrom" : "xsd:string",
+    "onProperty" : "http://example.com/ont/hasData"
+  }, {
+    "@id" : "_:b3",
+    "@type" : "owl:Restriction",
+    "minQualifiedCardinality" : "0",
+    "onDataRange" : "xsd:string",
+    "onProperty" : "http://example.com/ont/hasData"
+  }, {
+    "@id" : "_:b4",
+    "@type" : "owl:Restriction",
+    "allValuesFrom" : "http://example.com/ont/A",
+    "onProperty" : "http://example.com/ont/hasObj"
+  }, {
+    "@id" : "_:b5",
+    "@type" : "owl:Restriction",
+    "minQualifiedCardinality" : "0",
+    "onClass" : "http://example.com/ont/A",
+    "onProperty" : "http://example.com/ont/hasObj"
+  }, {
+    "@id" : "_:b6",
+    "@type" : "owl:Restriction",
+    "maxQualifiedCardinality" : "1",
+    "onDataRange" : "xsd:string",
+    "onProperty" : "http://example.com/ont/hasData"
+  }, {
+    "@id" : "_:b7",
+    "@type" : "owl:Restriction",
+    "maxQualifiedCardinality" : "1",
+    "onClass" : "http://example.com/ont/A",
+    "onProperty" : "http://example.com/ont/hasObj"
+  }, {
+    "@id" : "http://example.com/ont/A",
+    "@type" : "owl:Class"
+  }, {
+    "@id" : "http://example.com/ont/B",
+    "@type" : "owl:Class"
+  }, {
+    "@id" : "http://example.com/ont/C",
+    "@type" : "owl:Class"
+  }, {
+    "@id" : "http://example.com/ont/D",
+    "@type" : "owl:Class",
+    "subClassOf" : [ "_:b6", "_:b1", "_:b5", "_:b3", "_:b4", "_:b7", "_:b0", "_:b2" ]
+  }, {
+    "@id" : "http://example.com/ont/E",
+    "@type" : "owl:Class"
+  }, {
+    "@id" : "http://example.com/ont/hasData",
+    "@type" : "owl:DatatypeProperty"
+  }, {
+    "@id" : "http://example.com/ont/hasObj",
+    "@type" : "owl:ObjectProperty"
+  }, {
+    "@id" : "http://www.example.com/2015/4/untitled-ontology-49",
+    "@type" : "owl:Ontology"
+  }, {
+    "@id" : "xsd:string",
+    "@type" : "rdfs:Datatype"
+  } ],
+  "@context" : {
+    "someValuesFrom" : {
+      "@id" : "http://www.w3.org/2002/07/owl#someValuesFrom",
+      "@type" : "@id"
+    },
+    "onProperty" : {
+      "@id" : "http://www.w3.org/2002/07/owl#onProperty",
+      "@type" : "@id"
+    },
+    "allValuesFrom" : {
+      "@id" : "http://www.w3.org/2002/07/owl#allValuesFrom",
+      "@type" : "@id"
+    },
+    "onDataRange" : {
+      "@id" : "http://www.w3.org/2002/07/owl#onDataRange",
+      "@type" : "@id"
+    },
+    "minQualifiedCardinality" : {
+      "@id" : "http://www.w3.org/2002/07/owl#minQualifiedCardinality",
+      "@type" : "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+    },
+    "onClass" : {
+      "@id" : "http://www.w3.org/2002/07/owl#onClass",
+      "@type" : "@id"
+    },
+    "maxQualifiedCardinality" : {
+      "@id" : "http://www.w3.org/2002/07/owl#maxQualifiedCardinality",
+      "@type" : "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"
+    },
+    "subClassOf" : {
+      "@id" : "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "@type" : "@id"
+    },
+    "" : "http://www.example.com/2015/4/untitled-ontology-49#",
+    "owl" : "http://www.w3.org/2002/07/owl#",
+    "rdf" : "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+    "xml" : "http://www.w3.org/XML/1998/namespace",
+    "xsd" : "http://www.w3.org/2001/XMLSchema#",
+    "rdfs" : "http://www.w3.org/2000/01/rdf-schema#",
+    "dc" : "http://purl.org/dc/elements/1.1/"
+  }
+}

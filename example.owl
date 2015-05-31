@@ -1,0 +1,46 @@
+Prefix: dc: <http://purl.org/dc/elements/1.1/>
+Prefix: owl: <http://www.w3.org/2002/07/owl#>
+Prefix: rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+Prefix: xml: <http://www.w3.org/XML/1998/namespace>
+Prefix: xsd: <http://www.w3.org/2001/XMLSchema#>
+Prefix: rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+
+
+Ontology: <http://www.example.com/2015/4/untitled-ontology-49>
+
+
+Datatype: xsd:string
+
+    
+ObjectProperty: <http://example.com/ont/hasObj>
+
+    
+DataProperty: <http://example.com/ont/hasData>
+
+    
+Class: <http://example.com/ont/B>
+
+    
+Class: <http://example.com/ont/A>
+
+    
+Class: <http://example.com/ont/D>
+
+    SubClassOf: 
+        <http://example.com/ont/hasObj> min 0 <http://example.com/ont/A>,
+        <http://example.com/ont/hasData> min 0 xsd:string,
+        <http://example.com/ont/hasData> some xsd:string,
+        <http://example.com/ont/hasObj> max 1 <http://example.com/ont/A>,
+        <http://example.com/ont/hasData> max 1 xsd:string,
+        <http://example.com/ont/hasObj> only <http://example.com/ont/A>,
+        <http://example.com/ont/hasObj> some <http://example.com/ont/A>,
+        <http://example.com/ont/hasData> only xsd:string
+    
+    
+Class: <http://example.com/ont/C>
+
+    
+Class: <http://example.com/ont/E>
+
+    
